@@ -1,3 +1,5 @@
 # zookeeper-manager-server
-In Progress
-A UI manager for Zookeeper
+
+Work In Progress
+
+UI manager for Zookeeper
