@@ -1,12 +1,18 @@
 package com.jhallat.zookeeper.manager.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class ConfigurationController {
 
@@ -20,11 +26,19 @@ public class ConfigurationController {
 	}
 	
 	@GetMapping("/configurations")
-	public List<String> getConfigurations() {
+	public ResponseEntity<List<String>> getConfigurations() {
 		
+		List<String> configurations = new ArrayList<>();
 		File file = new File(zookeeperHome + "/" + zookeeperConfiguration);
+		if (file.isDirectory()) {
+			
+		} else {
+			log.warn(file.getPath() + " is not a directory.");
+			//TODO there is a better way to handle this
+			return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		
-		return null;
+		return new ResponseEntity<>(configurations, HttpStatus.OK);
 	}
 	
 }
